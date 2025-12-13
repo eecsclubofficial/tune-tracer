@@ -144,100 +144,38 @@ The trained model is saved using `joblib` or `pickle`.
 
 ## 📁 Project Structure
 ```
-tune-trace/                          # (or whatever name you choose)
+tune-trace/
 │
-├── frontend/                        # React + TypeScript app
-│   ├── public/
-│   │   └── index.html
-│   │
+├── frontend/                  # React + TypeScript
 │   ├── src/
-│   │   ├── assets/                  # Images, icons, static files
-│   │   ├── components/              # Reusable UI components
+│   │   ├── components/        # UI components
 │   │   │   ├── AudioUpload.tsx
 │   │   │   ├── SongResult.tsx
-│   │   │   ├── MoodBadge.tsx
-│   │   │   └── RecommendationCard.tsx
+│   │   │   └── Recommendations.tsx
 │   │   │
-│   │   ├── pages/                   # Page-level components
-│   │   │   ├── Home.tsx
-│   │   │   └── Result.tsx
-│   │   │
-│   │   ├── services/                # API calls (FastAPI / Supabase)
-│   │   │   ├── api.ts
-│   │   │   ├── audioService.ts
-│   │   │   └── authService.ts
-│   │   │
-│   │   ├── hooks/                   # Custom React hooks
-│   │   │   └── useAudioUpload.ts
-│   │   │
-│   │   ├── types/                   # TypeScript interfaces
-│   │   │   ├── song.ts
-│   │   │   └── mood.ts
-│   │   │
-│   │   ├── utils/                   # Helper functions
-│   │   │   └── formatDuration.ts
+│   │   ├── services/          # API calls
+│   │   │   └── api.ts
 │   │   │
 │   │   ├── App.tsx
-│   │   ├── main.tsx
-│   │   └── index.css
+│   │   └── main.tsx
 │   │
-│   ├── tailwind.config.ts
-│   ├── tsconfig.json
-│   └── vite.config.ts
+│   └── package.json
 │
-├── backend/                         # FastAPI backend
-│   ├── app/
-│   │   ├── main.py                  # FastAPI entry point
-│   │   │
-│   │   ├── api/                     # Route definitions
-│   │   │   ├── audio.py             # Audio upload endpoint
-│   │   │   ├── song.py              # Song identification API
-│   │   │   ├── mood.py              # Mood prediction endpoint
-│   │   │   └── recommend.py         # Song recommendations
-│   │   │
-│   │   ├── core/                    # App configuration
-│   │   │   ├── config.py            # Environment variables
-│   │   │   └── security.py
-│   │   │
-│   │   ├── services/                # Business logic
-│   │   │   ├── acrcloud_service.py
-│   │   │   ├── spotify_service.py
-│   │   │   └── audio_service.py
-│   │   │
-│   │   ├── ml/                      # Machine Learning logic
-│   │   │   ├── feature_extraction.py
-│   │   │   ├── mood_classifier.py
-│   │   │   └── model/
-│   │   │       └── mood_model.pkl
-│   │   │
-│   │   ├── db/                      # Database layer
-│   │   │   ├── supabase.py
-│   │   │   └── schemas.py
-│   │   │
-│   │   ├── utils/
-│   │   │   └── file_handler.py
-│   │   │
-│   │   └── __init__.py
-│   │
-│   ├── uploads/                     # Temporary audio storage
-│   ├── requirements.txt
-│   └── .env.example
+├── backend/                   # FastAPI backend
+│   ├── main.py                # API entry point
+│   ├── audio.py               # Audio upload & processing
+│   ├── song.py                # Song identification
+│   ├── mood.py                # Mood prediction (ML)
+│   ├── recommend.py           # Song recommendations
+│   ├── ml_model.pkl           # Trained ML model
+│   └── requirements.txt
 │
-├── ml-training/                     # Offline ML training (important)
-│   ├── datasets/
-│   ├── notebooks/
-│   │   └── mood_training.ipynb
-│   ├── train_model.py
-│   └── evaluate.py
+├── uploads/                   # Temporary audio files
 │
-├── docs/                            # Documentation
-│   ├── api.md
-│   ├── ml.md
-│   └── architecture.md
-│
-├── .gitignore
 ├── README.md
-└── docker-compose.yml (optional)
+├── .gitignore
+└── .env.example
+
 ```
 ---
 ## 🧪 Future Improvements
