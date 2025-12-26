@@ -4,13 +4,13 @@ import librosa
 def extract(file_path: str) -> np.ndarray:
     y, sr = librosa.load(file_path, duration = None)  # Conversion of Sound to Numbers (processing).
    
-    rms = np.mean(librosa.feature.rms(y=y))         # Soft or Loud Sound.
-    tempo = librosa.beat.tempo(y=y, sr=sr)[0]       # Slow or Fast Sound.
+    rms = np.std(librosa.feature.rms(y=y))         # Soft or Loud Sound.
+    tempo = librosa.beat.tempo(y = y, sr = sr)[0]       # Slow or Fast Sound.
 
-    mfcc = librosa.feature.mfcc(y=y, sr=sr, n_mfcc=13)      # Overall Sound (Timbre).
-    mfcc_mean = np.mean(mfcc, axis=1)
+    mfcc = librosa.feature.mfcc(y = y, sr = sr, n_mfcc=13)      # Overall Sound (Timbre).
+    mfcc_std = np.std(mfcc, axis=1)
 
-    features = np.hstack([rms, tempo, mfcc_mean])       # Combined [rms, temp, mfcc_mean] for easier ML processing.
+    features = np.hstack([rms, tempo, mfcc_std])       # Combined [rms, temp, mfcc_std] for easier ML processing.
     return features
 
 '''
