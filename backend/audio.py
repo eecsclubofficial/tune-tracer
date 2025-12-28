@@ -1,9 +1,12 @@
+# can try frontend to upload audio.
+
 import uuid
 from fastapi import UploadFile
 from pathlib import Path
 
 UPLOAD_DIR = Path("uploads")
 UPLOAD_DIR.mkdir(exist_ok=True)
+
 
 async def save_audio(file: UploadFile) -> str:
     file_ext = file.filename.split(".")[-1]
@@ -14,3 +17,4 @@ async def save_audio(file: UploadFile) -> str:
         f.write(await file.read())
     
     return str(file_path)
+
