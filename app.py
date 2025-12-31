@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Body
 from pydantic import BaseModel
 import joblib
 import numpy as np
@@ -21,8 +21,9 @@ def home():
 
 
 @app.post("/predict")
-def predict(request: PredictionRequest):
-
+def predict(
+    request: PredictionRequest = Body(..., media_type="application/json")
+):
     if len(request.features) != FEATURE_COUNT:
         raise HTTPException(
             status_code=422,
