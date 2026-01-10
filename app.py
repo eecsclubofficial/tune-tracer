@@ -4,9 +4,12 @@ import joblib
 import numpy as np
 
 app = FastAPI()
+import os
+model_path = os.path.join("ML", "mood_model.pkl")
+encoder_path = os.path.join("ML", "label_encoder.pkl")
 
-model = joblib.load("mood_model.pkl")
-encoder = joblib.load("label_encoder.pkl")
+model = joblib.load(model_path)
+encoder = joblib.load(encoder_path)
 
 FEATURE_COUNT = 13
 
