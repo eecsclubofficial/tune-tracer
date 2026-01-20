@@ -2,21 +2,31 @@ import numpy as np
 import librosa
 
 def extract(file_path: str) -> np.ndarray:
-    y, sr = librosa.load(file_path, duration = None)  # Conversion of Sound to Numbers (processing).
-   
-    rms = np.std(librosa.feature.rms(y=y))         # Soft or Loud Sound.
-    tempo = librosa.beat.tempo(y = y, sr = sr)[0]       # Slow or Fast Sound.
+    y, sr = librosa.load(file_path, sr=None)
 
-    mfcc = librosa.feature.mfcc(y = y, sr = sr, n_mfcc=13)      # Overall Sound (Timbre).
-    mfcc_std = np.std(mfcc, axis=1)
+    mfcc = librosa.feature.mfcc(y=y, sr=sr, n_mfcc=13)
 
-    features = np.hstack([rms, tempo, mfcc_std])       # Combined [rms, temp, mfcc_std] for easier ML processing.
+    mfcc_mean_2 = np.mean(mfcc[1])   
+    mfcc_mean_4 = np.mean(mfcc[3])  
+    mfcc_mean_7 = np.mean(mfcc[6])   
+
+    zcr = librosa.feature.zero_crossing_rate(y)[0]
+    zcr_mean = np.mean(zcr)
+
+    onsets = librosa.onset.onset_detect(y=y, sr=sr)
+    duration = librosa.get_duration(y=y, sr=sr)
+    event_density_mean = len(onsets) / duration if duration > 0 else 0.0
+    
+    chroma = librosa.feature.chroma_stft(y=y, sr=sr)
+    chromagram_mean_7 = np.mean(chroma[6])  
+    
+    features = np.array([
+        mfcc_mean_2,
+        mfcc_mean_4,
+        mfcc_mean_7,
+        zcr_mean,
+        event_density_mean,
+        chromagram_mean_7
+    ], dtype=float)
+
     return features
-
-'''
- Help from ChatGPT on MFCC, and librosa documentation. If we need realtime audio 
- analysis, we need to use PyAudio, tougher to integrate both the libraries. If 
- we somehow convert audio from microphone to numeric data in PyAudio and then 
- feed it to Librosa for analysis, we can make it happen.
-
-'''

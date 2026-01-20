@@ -1,5 +1,3 @@
-# can try frontend to upload audio.
-
 import uuid
 from fastapi import UploadFile
 from pathlib import Path
